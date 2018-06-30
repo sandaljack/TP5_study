@@ -9,8 +9,8 @@
 namespace app\api\controller\v1;
 
 use app\api\validate\IDMustBePostiveInt;
-use app\api\validate\TestValidate;
-use think\Validate;
+use app\api\model\Banner as BannerModel;
+use think\Exception;
 
 class Banner
 {
@@ -23,18 +23,16 @@ class Banner
     public function getBanner($id)
     {
         (new IDMustBePostiveInt())->goCheck();
-        $c = 1;
-//        $data = [
-//            'id' => $id,
-//        ];
-//
-//        $validate = new IDMustBePostiveInt();
-//        //batch批量验证
-//        $result = $validate->batch()->check($data);
-//        if ($result) {
-//
-//        } else {
-//
-//        }
+        try {
+            $banner = BannerModel::getBannerById($id);
+        } catch (Exception $ex) {
+            $err = [
+                'error_code' => 1001,
+                'msg' => $ex->getMessage()
+            ];
+            return json($err, 400);
+        }
+
+        return $banner;
     }
 }

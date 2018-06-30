@@ -8,6 +8,7 @@
 
 namespace app\api\controller\v1;
 
+use app\api\validate\TestValidate;
 use think\Validate;
 
 class Banner
@@ -25,12 +26,13 @@ class Banner
             'email' => 'lxj@qq.com'
         ];
 
-        $validate = new Validate([
-            'name' => 'require|max:10',
-            'eamil' => 'email'
-        ]);
+//        $validate = new Validate([
+//            'name' => 'require|max:10',
+//            'eamil' => 'email'
+//        ]);
+        $validate = new TestValidate();
         //batch批量验证
         $result = $validate->batch()->check($data);
-
+        var_dump($validate->getError());
     }
 }

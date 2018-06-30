@@ -22,17 +22,20 @@ class Banner
     public function getBanner($id)
     {
         $data = [
-            'name' => 'lxj1234567890',
-            'email' => 'lxj@qq.com'
+            'id' => $id,
         ];
 
 //        $validate = new Validate([
 //            'name' => 'require|max:10',
 //            'eamil' => 'email'
 //        ]);
-        $validate = new TestValidate();
+        $validate = new IDMustBePostiveInt();
         //batch批量验证
         $result = $validate->batch()->check($data);
-        var_dump($validate->getError());
+        if ($result) {
+
+        } else {
+            
+        }
     }
 }

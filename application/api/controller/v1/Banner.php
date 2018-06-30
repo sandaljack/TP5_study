@@ -8,6 +8,7 @@
 
 namespace app\api\controller\v1;
 
+use app\api\validate\IDMustBePostiveInt;
 use app\api\validate\TestValidate;
 use think\Validate;
 
@@ -21,21 +22,19 @@ class Banner
      */
     public function getBanner($id)
     {
-        $data = [
-            'id' => $id,
-        ];
-
-//        $validate = new Validate([
-//            'name' => 'require|max:10',
-//            'eamil' => 'email'
-//        ]);
-        $validate = new IDMustBePostiveInt();
-        //batch批量验证
-        $result = $validate->batch()->check($data);
-        if ($result) {
-
-        } else {
-            
-        }
+        (new IDMustBePostiveInt())->goCheck();
+        $c = 1;
+//        $data = [
+//            'id' => $id,
+//        ];
+//
+//        $validate = new IDMustBePostiveInt();
+//        //batch批量验证
+//        $result = $validate->batch()->check($data);
+//        if ($result) {
+//
+//        } else {
+//
+//        }
     }
 }

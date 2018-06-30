@@ -8,6 +8,7 @@
 
 namespace app\api\controller\v1;
 
+use think\Validate;
 
 class Banner
 {
@@ -19,6 +20,17 @@ class Banner
      */
     public function getBanner($id)
     {
-        return $id;
+        $data = [
+            'name' => 'lxj1234567890',
+            'email' => 'lxj@qq.com'
+        ];
+
+        $validate = new Validate([
+            'name' => 'require|max:10',
+            'eamil' => 'email'
+        ]);
+        //batch批量验证
+        $result = $validate->batch()->check($data);
+
     }
 }

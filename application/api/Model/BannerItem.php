@@ -11,7 +11,7 @@ namespace app\api\Model;
 
 use think\Model;
 
-class BannerItem extends Model
+class BannerItem extends BaseModel
 {
     //只显示字段
     protected $visible = ['id','img'];

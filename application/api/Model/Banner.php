@@ -13,7 +13,7 @@ use think\Db;
 use think\Exception;
 use think\Model;
 
-class Banner extends Model
+class Banner extends BaseModel
 {
     //定义表
     protected $table =  'banner';

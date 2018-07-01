@@ -24,15 +24,12 @@ class Banner
     public function getBanner($id)
     {
         (new IDMustBePostiveInt())->goCheck();
-        //关联一个模型
-//        $banner = BannerModel::with('items')->find($id);
-        //关联多个模型表
-//        $banner = BannerModel::with(['items','items1'])->find($id);
-        //嵌套关联模型
-        $banner = BannerModel::with(['items','items.img'])->find($id);
 
-
-//        $banner = BannerModel::getBannerById($id);
+        $banner = BannerModel::getBannerById($id);
+        //隐藏模型字段
+//        $banner->hidden(['delete_time']);
+        //只想显示模型字段
+//        $banner->visible(['id']);
         if (!$banner) {
             throw new BannerMissException();
         }

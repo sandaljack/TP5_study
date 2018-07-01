@@ -13,6 +13,9 @@ use think\Model;
 
 class BannerItem extends Model
 {
+    //只显示字段
+    protected $visible = ['id','img'];
+
     public function img()
     {
         //一对一

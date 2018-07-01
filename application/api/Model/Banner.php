@@ -15,8 +15,14 @@ use think\Model;
 
 class Banner extends Model
 {
-    //定于表
+    //定义表
     protected $table =  'banner';
+
+    //隐藏字段
+    protected $hidden = [
+        'update_time'
+    ];
+
     //关联banneritem模型
     public function items()
     {
@@ -25,15 +31,7 @@ class Banner extends Model
 
     public static function getBannerById($id)
     {
-//        $result = Db::query("select * from banner_item where banner_id=?", [$id]);
-//        return $result;
-//        $result = Db::table('banner_item')->where('banner_id','=' ,$id)->select();
-        //闭包
-        $result = Db::table('banner_item')
-            ->where(function($query)use ($id){
-                $query->where('banner_id', '=', $id);
-            })
-            ->select();
+        $result = self::with(['items', 'items.img'])->find($id);
 
         return $result;
     }

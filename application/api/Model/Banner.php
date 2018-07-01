@@ -23,6 +23,6 @@ class Banner
 //            throw $ex;
 //        }
 //        return "this is banner info";
-        return null;
+//        return null;
     }
 }

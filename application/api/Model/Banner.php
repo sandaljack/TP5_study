@@ -17,6 +17,12 @@ class Banner extends Model
 {
     //定于表
     protected $table =  'banner';
+    //关联banneritem模型
+    public function items()
+    {
+        return $this->hasMany('BannerItem', 'banner_id', 'id');
+    }
+
     public static function getBannerById($id)
     {
 //        $result = Db::query("select * from banner_item where banner_id=?", [$id]);

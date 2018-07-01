@@ -24,7 +24,10 @@ class Banner
     public function getBanner($id)
     {
         (new IDMustBePostiveInt())->goCheck();
-        $banner = BannerModel::get($id);
+        $banner = BannerModel::with('items')->find($id);
+        //关联多个模型表
+//        $banner = BannerModel::with(['items','items1'])->find($id);
+
 //        $banner = BannerModel::getBannerById($id);
         if (!$banner) {
             throw new BannerMissException();

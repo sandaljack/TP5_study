@@ -13,5 +13,9 @@ use think\Model;
 
 class BannerItem extends Model
 {
-
+    public function img()
+    {
+        //一对一
+        return $this->belongsTo('Image', 'img_id', 'id');
+    }
 }

@@ -26,10 +26,10 @@ class Banner
         (new IDMustBePostiveInt())->goCheck();
 
         $banner = BannerModel::getBannerById($id);
-//        if (!$banner) {
-//            throw new \Exception('内部错误');
-//        }
+        if (!$banner) {
+            throw new BannerMissException();
+        }
 
-        return $banner;
+        return json($banner);
     }
 }

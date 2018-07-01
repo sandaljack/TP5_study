@@ -11,16 +11,11 @@ namespace app\api\Model;
 
 use think\Model;
 
-class Image extends Model
+class Image extends BaseModel
 {
     //读取器
     protected function getUrlAttr($value, $data)//$data是数组
     {
-        $finalUrl = $value;
-        //拼接成完成url路径
-        if($data['from'] == 1) {
-            $finalUrl =  config('setting.img_prefix').$value;
-        }
-        return $finalUrl;
+        return $this->prefixImgUrl($value, $data);
     }
 }

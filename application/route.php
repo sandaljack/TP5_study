@@ -10,5 +10,5 @@
 // +----------------------------------------------------------------------
 
 use think\Route;
-
-Route::get('api/v1/banner/:id', 'api/v1.Banner/getBanner');
+//动态版本调用
+Route::get('api/:version/banner/:id', 'api/:version.Banner/getBanner');

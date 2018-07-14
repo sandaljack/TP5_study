@@ -11,6 +11,7 @@ namespace app\api\controller\v1;
 use app\api\model\Product as ProductModel;
 
 use app\api\validate\Count;
+use app\api\validate\IDMustBePostiveInt;
 use app\lib\exception\ProductException;
 
 class Product
@@ -19,6 +20,16 @@ class Product
     {
         (new Count())->goCheck();
         $products = ProductModel::getMostRecent($count);
+        if (!$products) {
+            throw new ProductException();
+        }
+        return $products;
+    }
+
+    public function getAllInCategory($id)
+    {
+        (new IDMustBePostiveInt())->goCheck();
+        $products = ProductModel::getProductsByCategotyID($id);
         if (!$products) {
             throw new ProductException();
         }

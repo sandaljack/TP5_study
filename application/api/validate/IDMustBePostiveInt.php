@@ -13,7 +13,7 @@ use think\Validate;
 class IDMustBePostiveInt extends BaseValidate
 {
     protected  $rule = [
-        'id'  =>  'require|isPostiveIntterger',
+        'id'  =>  'require|isPostiveInteger',
     ];
 
     protected  $message = [

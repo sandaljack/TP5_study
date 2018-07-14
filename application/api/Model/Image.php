@@ -13,8 +13,9 @@ use think\Model;
 
 class Image extends BaseModel
 {
-    //读取器
-    protected function getUrlAttr($value, $data)//$data是数组
+    protected $hidden = ['delete_time', 'id', 'from', 'update_time'];
+
+    public function getUrlAttr($value, $data)
     {
         return $this->prefixImgUrl($value, $data);
     }

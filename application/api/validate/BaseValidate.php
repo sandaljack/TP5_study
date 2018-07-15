@@ -39,7 +39,15 @@ class BaseValidate extends Validate
             return true;
         } else {
             return false;
-//            return $field.'必须是整数';
+        }
+    }
+
+    protected function isNotEmpty($value, $rule = '', $data = '', $field = '')
+    {
+        if (empty($value)) {
+            return false;
+        } else {
+            return true;
         }
     }
 }

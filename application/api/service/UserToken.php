@@ -9,10 +9,12 @@
 namespace app\api\service;
 
 
+use app\lib\exception\TokenException;
 use app\lib\exception\WeChatException;
 use think\Exception;
+use app\api\model\User as UserModel;
 
-class UserToken
+class UserToken extends Token
 {
     protected $code;
     protected $wxAppID;
@@ -39,10 +41,11 @@ class UserToken
             if ($loginFail) {
                 $this->processLoginError($wxResult);
             } else {
-                $this->grantToken($wxResult);
+                return $this->grantToken($wxResult);
             }
         }
     }
+
 
     private function grantToken($wxResult)
     {
@@ -51,7 +54,55 @@ class UserToken
         //如果存在不做处理，如果不存在新增一条user记录
         //生成令牌，准备缓存数据，写入缓存
         //把令牌返回客户端
+        //key:令牌  value:wxResult,uid,scope
         $openid = $wxResult['openid'];
+        $user = UserModel::getByOpenID($openid);
+        if ($user) {
+            //用户存在
+            $uid = $user->id;
+        } else {
+            //插入用户
+            $uid = $this->newUser($openid);
+        }
+        $cachedValue = $this->prepareCachedValue($wxResult, $uid);
+        $token = $this->saveToCache($cachedValue);
+        return $token;
+    }
+
+    private function saveToCache($cachedValue)
+    {
+        $key = self::generateToken();
+        $value = json_encode($cachedValue);
+        $expire_in = config('setting.token_expire');
+
+        $request = cache($key, $value, $expire_in);
+        if (!$request) {
+            throw new TokenException([
+                'msg' => '服务器缓存异常',
+                'errorCode' => 10005
+            ]);
+        }
+        return $key;
+    }
+
+
+    //缓存数据
+    private function prepareCachedValue($wxResult, $uid)
+    {
+        $cachedValue = $wxResult;
+        $cachedValue['uid'] = $uid;
+        $cachedValue['scope'] = 16;
+        return $cachedValue;
+    }
+
+    //新建用户
+    private function newUser($openid)
+    {
+        //创建并返回id
+        $user = UserModel::create([
+            'openid' => $openid
+        ]);
+        return $user->id;
     }
 
     private function processLoginError($wxResult)

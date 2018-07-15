@@ -30,3 +30,15 @@ function curl_get($url, &$httpCode = 0)
     curl_close($ch);
     return $file_contents;
 }
+
+//生成令牌
+function getRandChar($length)
+{
+    $str = null;
+    $strPol = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxxyz";
+    $max = strlen($strPol) - 1;
+    for ($i = 0; $i < $length ; $i++) {
+        $str .= $strPol[rand(0, $max)];
+    }
+    return $str;
+}

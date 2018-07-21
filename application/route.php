@@ -11,8 +11,10 @@
 
 use think\Route;
 //动态版本调用
+//轮播图
 Route::get('api/:version/banner/:id', 'api/:version.Banner/getBanner');
 
+//主题
 Route::get('api/:version/theme', 'api/:version.Theme/getSimpleList');
 
 Route::get('api/:version/theme/:id', 'api/:version.Theme/getComplexOne');
@@ -24,8 +26,10 @@ Route::group('api/:version/product', function(){
     Route::get(':id', 'api/:version.Product/getOne',[],['id'=>'\d+']);//必须id是正整数
 });
 
+//分类
 Route::get('api/:version/category/all', 'api/:version.Category/getAllCategories');
 
+//获取token
 Route::post('api/:version/token/user', 'api/:version.Token/getToken');
 
 

@@ -45,4 +45,9 @@ class Product
         }
         return $product;
     }
+
+    public function deleteOne($id)
+    {
+
+    }
 }

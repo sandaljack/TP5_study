@@ -18,28 +18,15 @@ use app\lib\exception\TokenException;
 use app\lib\exception\UserException;
 use think\Controller;
 
-class Address extends Controller
+class Address extends BaseController
 {
     //前置操作
     protected $beforeActionList = [
         'checkPrimaryScope' => ['only'=> 'createorupdateaddress'] //只有在调用createOrUpdateAddress前需要前置调用checkPrimaryScope
     ];
 
-    protected function checkPrimaryScope()
-    {
-        $scope = TokenService::getCurrentTokenVar('scope');
-        if ($scope) {
-            if ($scope >= ScopeEnum::User) {
-                return true;
-            } else {
-                throw new ForbiddenException();
-            }
-        } else {
-            throw new TokenException();
-        }
 
-    }
-
+    //创建和更新地址
     public function  createOrUpdateAddress()
     {
         $validate = new AddressNew();

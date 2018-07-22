@@ -76,7 +76,7 @@ class Token
     //只有用户才能访问的接口权限
     public static function needExclusiveScope()
     {
-        $scope = TokenService::getCurrentTokenVar('scope');
+        $scope = self::getCurrentTokenVar('scope');
         if ($scope) {
             if ($scope == ScopeEnum::User) {
                 return true;

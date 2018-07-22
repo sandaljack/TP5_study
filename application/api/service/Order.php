@@ -9,10 +9,13 @@
 namespace app\api\service;
 
 
+use app\api\Model\OrderProduct;
 use app\api\Model\Product;
 use app\api\Model\UserAddress;
+use app\api\Model\Order as OrderModel;
 use app\lib\exception\OrderException;
 use app\lib\exception\UserException;
+use think\Exception;
 
 class Order
 {
@@ -39,7 +42,58 @@ class Order
         }
 
         //开始创建订单
-        $orderSnap = $this->snapOrder();//生成快照
+        $orderSnap = $this->snapOrder($status);//生成快照
+        $order = $this->createOrder($orderSnap);//创建订单
+        $order['pass'] = true;
+        return $order;
+
+    }
+
+    //创建订单
+    private function createOrder($snap)
+    {
+        try {
+            $orderNo = $this->makeOrderNo();//生成订单号
+            $order = new OrderModel();
+            $order->user_id = $this->uid;
+            $order->order_no = $orderNo;
+            $order->total_price = $snap['orderPrice'];
+            $order->total_count = $snap['totalCount'];
+            $order->snap_img = $snap['snapImg'];
+            $order->snap_name = $snap['snapName'];
+            $order->snap_address = $snap['snapAddress'];
+            $order->snap_items = json_encode($snap['pStatus']);
+            $order->save();
+
+            //插入order_product
+            $orderID = $order->id;
+            $create_time = $order->create_time;
+            foreach ($this->oProducts as &$p) {
+                $p['order_id'] = $orderID;
+            }
+            $orderProduct = new OrderProduct();
+            $orderProduct->saveAll($this->oProducts);
+            return [
+                'order_no' => $orderNo,
+                'order_id' => $orderID,
+                'create_time' => $create_time,
+            ];
+        } catch (Exception $e) {
+            throw $e;
+        }
+
+
+    }
+
+    //生成订单号
+    public static function makeOrderNo()
+    {
+        $yCode = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+        $orderSn =
+            $yCode[intval(date('Y')) - 2018] . strtoupper(dechex(date('m'))) . date(
+                'd') . substr(time(), -5) . substr(microtime(), 2, 5) . sprintf(
+                '%02d', rand(0, 99));
+        return $orderSn;
     }
 
     //生成订单快照

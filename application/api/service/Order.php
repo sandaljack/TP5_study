@@ -133,6 +133,29 @@ class Order
         return $userAddress;
     }
 
+    /**
+     * @param string $orderNo 订单号
+     * @return array 订单商品状态
+     * @throws Exception
+     */
+    public function checkOrderStock($orderID)
+    {
+        //        if (!$orderNo)
+        //        {
+        //            throw new Exception('没有找到订单号');
+        //        }
+
+        // 一定要从订单商品表中直接查询
+        // 不能从商品表中查询订单商品
+        // 这将导致被删除的商品无法查询出订单商品来
+        $oProducts = OrderProduct::where('order_id', '=', $orderID)
+            ->select();
+        $this->products = $this->getProductsByOrder($oProducts);
+        $this->oProducts = $oProducts;
+        $status = $this->getOrderStatus();
+        return $status;
+    }
+
     //获取订单状态
     private function getOrderStatus()
     {

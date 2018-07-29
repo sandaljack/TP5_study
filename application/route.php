@@ -37,6 +37,20 @@ Route::post('api/:version/address', 'api/:version.Address/createOrUpdateAddress'
 
 //订单
 Route::post('api/:version/order', 'api/:version.Order/placeOrder');
+Route::get('api/:version/order/:id', 'api/:version.Order/getDetail', [], ['id'=>'\d+']);//获取订单列表
+Route::get('api/:version/order/by_user', 'api/:version.Order/getSummaryByUser');//获取订单详情
+
+
+
+//支付
+Route::post('api/:version/pay/pre_order', 'api/:version.Pay/getPreOrder');
+
+//支付回调通知
+Route::post('api/:version/pay/notify', 'api/:version.Pay/receiveNotify');
+Route::post('api/:version/pay/re_notify', 'api/:version.Pay/redirectNotify');//转发接口 用于调试
+
+
+
 
 
 

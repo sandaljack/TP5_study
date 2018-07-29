@@ -7,5 +7,6 @@
  */
 
 return [
-    'token_salt' => 'liangxuejie'
+    'token_salt' => 'liangxuejie',
+    'pay_back_url' => 'http://zerg.com'
 ];

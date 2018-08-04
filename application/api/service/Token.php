@@ -108,4 +108,20 @@ class Token
         return false;
     }
 
+    /**
+     * 验证token
+     * @param $token
+     * @return bool
+     */
+    public static function verifyToken($token)
+    {
+        $exist = Cache::get($token);
+        if($exist){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

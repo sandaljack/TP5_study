@@ -26,6 +26,7 @@ class Banner
         (new IDMustBePostiveInt())->goCheck();
 
         $banner = BannerModel::getBannerById($id);
+
         //隐藏模型字段
 //        $banner->hidden(['delete_time']);
         //只想显示模型字段

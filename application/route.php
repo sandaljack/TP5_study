@@ -36,6 +36,8 @@ Route::post('api/:version/token/verify', 'api/:version.Token/verifyToken');
 
 //地址
 Route::post('api/:version/address', 'api/:version.Address/createOrUpdateAddress');
+Route::get('api/:version/address', 'api/:version.Address/getUserAddress');
+
 
 //订单
 Route::post('api/:version/order', 'api/:version.Order/placeOrder');

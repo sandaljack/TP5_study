@@ -23,7 +23,7 @@ class Address extends BaseController
 {
     //前置操作
     protected $beforeActionList = [
-        'checkPrimaryScope' => ['only'=> 'createorupdateaddress'] //只有在调用createOrUpdateAddress前需要前置调用checkPrimaryScope
+        'checkPrimaryScope' => ['only'=> 'createorupdateaddress,getUserAddress'] //只有在调用createOrUpdateAddress前需要前置调用checkPrimaryScope
     ];
 
     /**

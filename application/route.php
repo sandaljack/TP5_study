@@ -32,6 +32,8 @@ Route::get('api/:version/category/all', 'api/:version.Category/getAllCategories'
 //获取token
 Route::post('api/:version/token/user', 'api/:version.Token/getToken');
 Route::post('api/:version/token/verify', 'api/:version.Token/verifyToken');
+Route::post('api/:version/token/app', 'api/:version.Token/getAppToken');
+
 
 
 //地址
@@ -43,6 +45,10 @@ Route::get('api/:version/address', 'api/:version.Address/getUserAddress');
 Route::post('api/:version/order', 'api/:version.Order/placeOrder');
 Route::get('api/:version/order/:id', 'api/:version.Order/getDetail', [], ['id'=>'\d+']);//获取订单列表
 Route::get('api/:version/order/by_user', 'api/:version.Order/getSummaryByUser');//获取订单详情
+Route::get('api/:version/order/paginate', 'api/:version.Order/getSummary');//获取订单分页
+Route::put('api/:version/order/delivery', 'api/:version.Order/delivery');//获取订单分页
+
+
 
 
 
